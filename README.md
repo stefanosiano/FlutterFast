@@ -26,8 +26,8 @@ While this library should be safe to use, it has not been properly released and 
 Depends on `flutter_bloc`
 
 - FastBloc: Base class for blocs. It contains management of actions, additional data and validations. It also register to streams and run "one-time" functions
-- FastBlocProvider: Wrapper around [BlocProvider], that adds auto dispose of bloc, a [create] function to create the bloc and a [blocListener] invoked only if FastBloc instance's [State.isActionAvailable] is true
-- DisposingFastBlocBuilder: Widget that disposes the associated [FastBloc] when not needed anymore, through its extendable [dispose()] method
+- FastBlocProvider: Wrapper around `BlocProvider`, that adds auto dispose of bloc, a `create` function to create the bloc and a `blocListener` invoked only if FastBloc instance's `isActionAvailable` is true
+- DisposingFastBlocBuilder: Widget that disposes the associated `FastBloc` when not needed anymore, through its extendable `dispose()` method
 
 
 ### Local Database helpers (SQLite): Exports under `flutter_fast_database.dart`
