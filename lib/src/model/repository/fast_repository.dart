@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 
 abstract class FastRepository {
   final Map<String, StreamController<dynamic>> _controllers = {};
-  final Map<String, Future<dynamic> Function()> _refreshingFunctions = {};
+  final Map<String, FutureOr<dynamic> Function()> _refreshingFunctions = {};
 
   @protected
-  StreamSubscription<T> subscribe<T>(String key, Future<T> Function() refreshData, void Function(T) onData) {
+  StreamSubscription<T> subscribe<T>(String key, FutureOr<T> Function() refreshData, void Function(T) onData) {
     StreamController<T> controller = StreamController<T>();
     _controllers[key] = controller
       ..onListen = () async {
@@ -20,6 +20,12 @@ abstract class FastRepository {
 
   @protected
   void refreshStream(String key) {
-    _controllers[key]?.add(_refreshingFunctions[key]);
+    if (_refreshingFunctions[key] is Future<dynamic> Function()) {
+      (_refreshingFunctions[key] as Future<dynamic> Function())().then((data) {
+        _controllers[key]?.add(data);
+      });
+    } else {
+      _controllers[key]?.add(_refreshingFunctions[key]?.call());
+    }
   }
 }
